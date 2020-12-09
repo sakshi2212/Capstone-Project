@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="abc" method="POST">
+        {% csrf_token %}
+        Movie Name<input type="text" name="mname">
+        Genre <input type="text" name="mgenre">
+        Review <input type="text" name="mreview">
+        <input type="submit">
+    </form>
+    <br>
+    <form action="prediction" method="GET">
+        <input type="submit" value="Predict">
+    </form>
+    <form action="scrape" method="POST">
+        {% csrf_token %}
+        Enter the movie name for reviews <input type="text" name="movieScrape">
+        <input type="submit" value="Scrape Reviews">
+    </form>
+    <form action="logout" method="POST">
+    {% csrf_token %}
+    <button>Logout</button>
+    </form>
+    <!-- {% for i in result %}
+    <h2> {{i.mname}} {{i.mgenre}} {{i.mreview}}</h2>
+    {% endfor %} -->
+
+</body>
+</html>

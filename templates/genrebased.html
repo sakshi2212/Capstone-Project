@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet"
+              href= 
+"https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+              integrity= 
+"sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+              crossorigin="anonymous" /> 
+        <script src= 
+"https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+                integrity= 
+"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+                crossorigin="anonymous"> 
+      </script> 
+        <script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+                integrity= 
+"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+                crossorigin="anonymous"> 
+      </script> 
+        <script src= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+                integrity= 
+"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"> 
+      </script> 
+        <script src= 
+"https://code.jquery.com/jquery-3.5.1.js"
+                integrity= 
+"sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+                crossorigin="anonymous"> 
+      </script>  -->
+      <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  top:30%;
+  padding-top: 40px;
+  width: 60%;
+  height: 40%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+    <title>Genre Based Shows</title>
+    <link rel="stylesheet" href="static/css/vshowstyle.css">
+</head>
+<body>
+<div class="container">
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fas fa-bars" id="btn"></i>
+            <i class="fas fa-times" id="cancel"></i>
+        </label>
+        <img src="static/img/netflix-log.svg" class="image" alt="">
+        <h1>Movie Popularity Analysis</h1>
+        <ul>
+            
+            <li><a href="{% url 'visitorlogin' %}">Genre Based Shows</a></li>
+            <li><a href="{% url 'trending' %}">Trending Shows</a></li>
+            <li><a href="{% url 'top10' %}">Top 10 Shows</a></li>
+            <button class="btn solid"><a href="{% url 'login' %}">Logout</a></button>
+        </ul>
+    </nav>
+    <div class="category">
+        <form action="visitorlogin" method="POST" class="genreshows">
+        {% csrf_token %}
+            <label class="lgenre">Genre :</label>
+            <select name="genre" class="custom-select" id="genre">
+                <option value="">Select</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Drama">Drama</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Action">Action</option>
+                <option value="Romance">Romance</option>
+                <option value="Horror">Horror</option>
+                <option value="War">War</option>
+                <option value="Fantasy">Fantasy</option>
+            </select>
+            <label class="lpopular">Overall Popularity :</label>
+            <select name="popular" class="custom-select-1" id="popular">
+                <option value="">Select</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            
+            <input id="button" type="submit" class="btn solid btn1" value="Generate" name="Generate">
+            
+        </form>
+    </div>
+    <div id= "show" class="data" style="margin-left: 7.7em;">
+        <table id="table">
+        {% for i in query.0 %}
+        {% if forloop.first %}
+            <tr>
+                <th>S No.</th>
+                <th>Name</th>
+                <th>Genre</th>
+            </tr>
+            {%endif%}
+            {% endfor %}
+            {% for i in query %}
+            <tr>
+                <td><p type="button" class="use-address">{{ forloop.counter }}</p></td>
+                <td class="nr"><p type="button" class="use-address">{{i.0}}</p></td>
+                <td><p type="button" onclick="MyFunc()" id="myBtn" class="use-address">{{i.1}}</p></td> 
+            </tr>
+            {% endfor %}
+        </table>
+        
+    </div>
+</div>
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+
+</div>
+
+<script>
+    function MyFunc(){
+
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+    modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
+    }
+
+    
+</script>     
+</body>
+</html>

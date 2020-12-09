@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Trending Shows</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h2>Trending Shows</h2> 
+  {% for key, value in query.items %}          
+  <table class="table">
+  
+  <h3>{{ key }}</h3> 
+    <thead>
+    
+    <tr>
+    
+      <th scope="col">S No.</th>
+      <th scope="col">Movie</th>
+      <th scope="col">Genre</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in value %} 
+    <tr>
+      <td><p>{{ forloop.counter }}</p></td>
+      <td><p>{{ i.0 }}</p></td>
+      <td><p>{{ i.1 }}</p></td>
+    </tr>
+   {% endfor %} 
+  </tbody>
+ 
+</table>
+ <br>
+{% endfor %}
+</div>

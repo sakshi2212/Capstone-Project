@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <title>Genre Based Shows</title>
+    <link rel="stylesheet" href="static/css/vshowstyle.css">
+    <style>
+        .card{
+        box-shadow:  #f3f3f3 4px 4px 20px,
+            #f7f7f7 -4px -4px 10px;}
+        .card-body{
+        font-family: sans-serif;
+        font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fas fa-bars" id="btn"></i>
+            <i class="fas fa-times" id="cancel"></i>
+        </label>
+        <img src="static/img/netflix-log.svg" class="image" alt="">
+        <h1>Movie Popularity Analysis</h1>
+        <ul>
+            
+            <li><a href="{% url 'visitorlogin' %}">Genre Based Shows</a></li>
+            <li><a href="{% url 'trending' %}">Trending Shows</a></li>
+            <li><a href="{% url 'top10' %}">Top 10 Shows</a></li>
+            <button class="btn solid"><a href="{% url 'login' %}">Logout</a></button>
+        </ul>
+    </nav>
+    <div>
+        
+    </div>
+    <br>
+
+    <div  id="container" style="width: 75%; margin-left: 9.2em;">
+    <canvas id="pie-chart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+  var colorBackground = [
+  "#581845",
+  "#93007d",
+  "#900C35",
+  "#c70039",
+  "#d10667",
+  "#e72b59",
+  "#f74a48",
+  "#ff6936",
+  "#ff5733",
+  "#ff8821",
+  "#ffc300",
+  "#aebf18",
+  "#61b241",
+  "#009f61",
+  "#008977",
+  "#00717d",
+];
+
+    var config = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: colorBackground,
+            
+          label: 'Trending Genre'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    
+    // var config1 = {
+    //   type: 'bar',
+    //   data: {
+    //     datasets: [{
+    //       data: {{ data|safe }},
+    //       backgroundColor: colorBackground,
+            
+    //       label: 'Population'
+    //     }],
+    //     labels: {{ labels|safe }}
+    //   },
+    //   options: {
+    //     responsive: true
+    //   }
+    // };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+    // window.onload = function() {
+    //   var ctx1 = document.getElementById('bar-chart').getContext('2d');
+    //   window.myBar = new Chart(ctx1, config1);
+    // };
+
+  </script>
+
+
+
+<script>
+    $('#check').change(function(){
+        if($(this).is(":checked")){
+            $('.category').addClass('display');
+            $('.data').addClass('display');
+        }
+        else{
+            $('.category').removeClass('display');
+            $('.data').removeClass('display');
+        }
+    });
+</script>     
+</body>
+</html>
